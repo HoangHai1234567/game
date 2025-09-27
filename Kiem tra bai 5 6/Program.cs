@@ -101,7 +101,14 @@ class Program
         Console.Write("\nNhap ten sinh vien can tim: ");
         string nameSearch = Console.ReadLine().ToLower();
 
-        var ds = list.Where(s => s.Name.ToLower().Contains(nameSearch)).ToList();
+    var ds = list
+    .Where(s =>
+    {
+        var words = s.Name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        var lastName = words[^1]; // Tu cuoi cung trong ten
+        return lastName.Equals(nameSearch, StringComparison.OrdinalIgnoreCase);
+    })
+    .ToList();
 
         if (ds.Count == 0)
             Console.WriteLine("Khong tim thay sinh vien.");
@@ -129,6 +136,5 @@ class Program
         // Tìm sinh viên theo tên
         TimTheoTen(students);
 
-        Console.WriteLine("\n--- Ket thuc chuong trinh ---");
     }
 }
